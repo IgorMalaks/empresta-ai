@@ -1,0 +1,8 @@
+.next/
+node_modules/
+Aula *.html
+Aula *_files/
+docs/
+rules/
+*.md
+.env*

@@ -1,0 +1,21 @@
+# Configuração local e segredos; exemplos sem credenciais podem ser versionados.
+.env
+.env.*
+!.env.example
+
+# Materiais locais de referência das aulas; não fazem parte da aplicação.
+Aula*/
+Aula*.html
+stacks_H.md
+
+# Arquivos temporários do sistema e logs locais.
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+
+# Dependências, artefatos do Next.js e relatórios locais.
+node_modules/
+.next/
+out/
+coverage/

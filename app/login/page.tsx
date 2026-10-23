@@ -128,6 +128,13 @@ export default function LoginPage() {
             >
               Voltar para a página inicial
             </Link>
+            <br />
+            <Link
+              className="text-[var(--accent-text)] transition hover:text-[var(--accent-hover)]"
+              href="/painel"
+            >
+              Ver prévia visual do painel
+            </Link>
           </p>
         </div>
       </section>

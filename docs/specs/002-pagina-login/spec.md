@@ -23,6 +23,8 @@ Empresta Aí, deixando claro que o login ainda não está ativo.
   não está ativa.
 - A tela não envia, armazena ou valida credenciais.
 - Existe um link para voltar à página inicial.
+- Existe um link claramente identificado para abrir a prévia visual pública de
+  `/painel`, sem iniciar uma sessão.
 - O layout se adapta a telas pequenas e grandes e mantém foco visível para
   navegação por teclado.
 
@@ -32,9 +34,10 @@ Empresta Aí, deixando claro que o login ainda não está ativo.
 - **CA-02:** e-mail e senha têm rótulos visíveis e autocomplete apropriado.
 - **CA-03:** o botão “Entrar” está desabilitado e o estado pendente está explicado.
 - **CA-04:** o link de retorno abre `/`.
-- **CA-05:** a página não envia credenciais nem simula uma sessão iniciada.
-- **CA-06:** o layout permanece utilizável em telas pequenas e grandes.
-- **CA-07:** o build de produção gera a rota `/login`.
+- **CA-05:** o link da prévia abre `/painel` sem habilitar o botão de login.
+- **CA-06:** a página não envia credenciais nem simula uma sessão iniciada.
+- **CA-07:** o layout permanece utilizável em telas pequenas e grandes.
+- **CA-08:** o build de produção gera a rota `/login`.
 
 ## Fora de escopo
 
@@ -46,4 +49,4 @@ Empresta Aí, deixando claro que o login ainda não está ativo.
 ## Contratos afetados
 
 Nenhum contrato de API ou banco. A entrega adiciona apenas a interface pública
-da rota `/login` e um link de retorno para `/`.
+da rota `/login` e links para `/` e para a prévia `/painel`.

@@ -10,6 +10,7 @@ local. Os fluxos de negócio ainda precisam ser especificados no PRD.
 - [Spec da página inicial](docs/specs/001-pagina-inicial/spec.md): escopo e critérios da primeira entrega.
 - [Spec da tela de login](docs/specs/002-pagina-login/spec.md): escopo visual, sem autenticação funcional.
 - [Spec do sistema visual](docs/specs/003-sistema-visual/spec.md): adaptação da identidade visual de referência às páginas públicas.
+- [Spec do painel inicial](docs/specs/004-painel-inicial/spec.md): prévia visual pública, sem sessão ou dados reais.
 - [Sistema visual](docs/design-system.md): tokens e orientações de estilo compartilhados.
 - [Decisões de tecnologia](docs/adr/001-stack.md): PostgreSQL confirmado; demais itens pendentes.
 - [Orientações do repositório](AGENTS.md): contexto e processo de trabalho.
@@ -45,6 +46,7 @@ Comandos verificados neste repositório:
 ## Estado atual
 
 - Página inicial responsiva em Next.js, TypeScript e Tailwind CSS.
+- Prévia visual do painel disponível em `/painel`; a rota ainda não é protegida por autenticação.
 - Navegação local entre as seções da própria página.
 - Sem autenticação, API, banco provisionado, migrations ou regras de negócio.
 - `.env.example` apenas com orientações, sem configuração de conexão.

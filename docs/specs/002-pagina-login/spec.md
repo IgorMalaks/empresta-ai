@@ -18,7 +18,7 @@ Empresta Aí, deixando claro que o login ainda não está ativo.
 ## Regras e comportamento
 
 - A rota `/login` apresenta campos rotulados de e-mail e senha.
-- Os campos usam tipos e atributos de preenchimento apropriados para acessibilidade e autocomplete.
+- Os campos usam tipos e atributos de preenchimento apropriados para acessibilidade e autocomplete, e permanecem desabilitados enquanto o login não estiver ativo.
 - O botão “Entrar” fica desabilitado e a página informa que a autenticação ainda
   não está ativa.
 - A tela não envia, armazena ou valida credenciais.

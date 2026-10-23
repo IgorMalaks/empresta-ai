@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { BrandMark } from "../_components/brand-mark";
+
 export const metadata: Metadata = {
   title: "Entrar | Empresta Aí",
   description:
@@ -9,59 +11,79 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[var(--background)] px-5 py-10 text-[var(--text)] sm:px-8">
-      <div className="ambient-grid" aria-hidden="true" />
-      <div className="ambient-glow ambient-glow--cyan" aria-hidden="true" />
-      <div className="ambient-glow ambient-glow--purple" aria-hidden="true" />
+    <main className="login-layout grid min-h-screen">
+      <section
+        aria-label="Sobre o Empresta Aí"
+        className="login-intro flex flex-col justify-between gap-14"
+      >
+        <Link href="/" className="flex w-fit items-center gap-3">
+          <BrandMark />
+          <span className="text-base font-semibold tracking-[0.02em]">
+            Empresta Aí
+          </span>
+        </Link>
 
-      <div className="relative z-10 w-full max-w-md">
-        <header className="mb-8 flex justify-center">
-          <Link href="/" className="group flex items-center gap-3">
-            <span className="logo-mark" aria-hidden="true">
-              E
-            </span>
-            <span className="font-display text-lg font-extrabold tracking-[-0.03em]">
-              empresta<span className="text-[var(--cyan)]">aí</span>
-            </span>
-          </Link>
-        </header>
-
-        <section className="rounded-3xl border border-[var(--border)] bg-[rgba(9,18,33,.9)] p-6 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-9">
-          <div className="mb-8">
-            <p className="eyebrow">Área de acesso</p>
-            <h1 className="font-display mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-              Entre na sua conta
+        <div className="flex flex-col gap-7">
+          <div className="flex flex-col gap-[18px]">
+            <span className="login-kicker">Equipamentos compartilhados</span>
+            <h1 className="login-headline">
+              O que você precisa.
+              <br />
+              Bem mais perto.
             </h1>
-            <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
-              Acompanhe os equipamentos compartilhados pela sua equipe.
+            <p className="login-description">
+              O Empresta Aí reúne equipamentos compartilhados em uma experiência
+              clara, para todo mundo saber o que está disponível e onde cada
+              item está.
             </p>
           </div>
+          <div className="login-rule" aria-hidden="true" />
+          <p className="text-xs leading-6 text-[var(--muted)]">
+            Uma proposta para organizar o uso compartilhado de equipamentos.
+          </p>
+        </div>
 
-          <div className="space-y-5">
-            <div>
-              <label className="mb-2 block text-sm font-medium" htmlFor="email">
+        <p className="text-[11px] text-[var(--faint)]">
+          Empresta Aí · interface em preparação
+        </p>
+      </section>
+
+      <section
+        aria-label="Acesso ao Empresta Aí"
+        className="login-access flex items-center justify-center"
+      >
+        <div className="login-form-shell flex flex-col">
+          <header className="flex flex-col gap-[10px]">
+            <h2 className="login-form-title">Entrar</h2>
+            <p className="text-[13px] leading-6 text-[var(--muted)]">
+              Acesse com seu e-mail e senha para continuar.
+            </p>
+          </header>
+
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
+              <label className="text-xs text-[var(--muted)]" htmlFor="email">
                 E-mail
               </label>
               <input
                 autoComplete="username"
-                className="w-full rounded-xl border border-[var(--border)] bg-[rgba(5,10,20,.75)] px-4 py-3 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--muted)] focus-visible:border-[var(--cyan)] focus-visible:ring-2 focus-visible:ring-[rgba(0,229,255,.18)]"
+                className="login-control"
+                disabled
                 id="email"
                 name="email"
-                placeholder="seu@email.com"
+                placeholder="voce@exemplo.com"
                 type="email"
               />
             </div>
 
-            <div>
-              <label
-                className="mb-2 block text-sm font-medium"
-                htmlFor="password"
-              >
+            <div className="flex flex-col gap-2">
+              <label className="text-xs text-[var(--muted)]" htmlFor="password">
                 Senha
               </label>
               <input
                 autoComplete="current-password"
-                className="w-full rounded-xl border border-[var(--border)] bg-[rgba(5,10,20,.75)] px-4 py-3 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--muted)] focus-visible:border-[var(--cyan)] focus-visible:ring-2 focus-visible:ring-[rgba(0,229,255,.18)]"
+                className="login-control"
+                disabled
                 id="password"
                 name="password"
                 placeholder="Digite sua senha"
@@ -71,33 +93,44 @@ export default function LoginPage() {
 
             <button
               aria-describedby="login-status"
-              className="button w-full justify-center disabled:cursor-not-allowed disabled:opacity-50"
+              className="login-submit inline-flex items-center justify-center gap-3 disabled:cursor-not-allowed"
               disabled
               type="button"
             >
               Entrar
+              <svg
+                aria-hidden="true"
+                className="size-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.8"
+              >
+                <path d="M5 12h14m-5-5 5 5-5 5" />
+              </svg>
             </button>
+
+            <p className="login-status" id="login-status" role="status">
+              A autenticação ainda não está ativa neste projeto.
+            </p>
           </div>
 
-          <p
-            className="mt-4 rounded-xl border border-[var(--border)] bg-[rgba(255,255,255,.025)] px-4 py-3 text-center text-xs leading-5 text-[var(--muted)]"
-            id="login-status"
-            role="status"
-          >
-            A autenticação ainda não está ativa neste projeto.
-          </p>
-        </section>
+          <div className="login-divider" aria-hidden="true" />
 
-        <p className="mt-7 text-center text-sm text-[var(--muted)]">
-          <Link
-            className="rounded-sm transition hover:text-[var(--cyan)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--cyan)]"
-            href="/"
-          >
-            <span aria-hidden="true">← </span>
-            Voltar para a página inicial
-          </Link>
-        </p>
-      </div>
+          <p className="text-center text-xs leading-[1.8] text-[var(--faint)]">
+            Precisa voltar?
+            <br />
+            <Link
+              className="text-[var(--muted)] transition hover:text-[var(--accent-text)]"
+              href="/"
+            >
+              Voltar para a página inicial
+            </Link>
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

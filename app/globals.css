@@ -2,19 +2,73 @@
 @source "./";
 
 :root {
-  --background: #050a14;
-  --surface: #091221;
-  --cyan: #00e5ff;
-  --green: #00ff88;
-  --orange: #ff6b35;
-  --purple: #7c3aed;
-  --pink: #f472b6;
-  --yellow: #ffd500;
-  --text: #e8f4f8;
-  --muted: #7fa8c0;
-  --card: rgba(255, 255, 255, 0.04);
-  --border: rgba(0, 229, 255, 0.15);
-  --border-strong: rgba(0, 229, 255, 0.48);
+  color-scheme: dark;
+  --page: #05070f;
+  --background: #080c1a;
+  --foreground: #e6eaf6;
+  --surface: #0e1530;
+  --sunken: #0b1128;
+  --muted: #8a93b2;
+  --dim: #7c86a2;
+  --faint: #5e6884;
+  --border: #2b3450;
+  --border-soft: #1a2340;
+  --border-frame: #222c4a;
+  --accent: #5b7fe0;
+  --accent-text: #b4c6f6;
+  --accent-hover: #eef2fe;
+  --accent-icon: #8aa6ee;
+  --accent-deep: #001449;
+  --accent-border: #25408f;
+  --error: #f0a0a5;
+  --gradient-login: linear-gradient(
+    160deg,
+    #001449 0%,
+    #00102f 60%,
+    #080c1a 100%
+  );
+  --gradient-rule: linear-gradient(to right, #3c5dbe, rgba(60, 93, 190, 0));
+  --gradient-divider: linear-gradient(
+    to right,
+    transparent,
+    #222c4a 48px,
+    #222c4a calc(100% - 48px),
+    transparent
+  );
+  --radius-control: 8px;
+
+  /* Compatibility aliases used by the existing homepage styles. */
+  --text: var(--foreground);
+  --cyan: var(--accent);
+  --green: var(--accent-icon);
+  --orange: var(--dim);
+  --purple: var(--accent-border);
+  --pink: var(--accent-text);
+  --yellow: var(--muted);
+  --card: var(--surface);
+  --border-strong: var(--accent-border);
+}
+
+@theme inline {
+  --font-sans: var(--font-open-sans);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
+  --color-faint: var(--faint);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-border-frame: var(--border-frame);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-icon: var(--accent-icon);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-border: var(--accent-border);
+  --color-error: var(--error);
+  --radius-control: 8px;
 }
 
 * {
@@ -26,15 +80,8 @@ html {
 body {
   margin: 0;
   background: var(--background);
-  color: var(--text);
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  color: var(--foreground);
+  font-family: var(--font-open-sans), system-ui, sans-serif;
 }
 a,
 button {
@@ -45,15 +92,145 @@ a {
   outline-offset: 4px;
 }
 ::selection {
-  background: rgba(0, 229, 255, 0.2);
+  background: rgba(91, 127, 224, 0.24);
   color: white;
 }
 
 .font-display {
-  font-family: "Trebuchet MS", Inter, ui-sans-serif, sans-serif;
+  font-family: inherit;
 }
 .font-mono {
-  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.login-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+.login-intro {
+  min-height: 34rem;
+  padding: 2rem 1.5rem;
+  background-image: var(--gradient-login);
+}
+.login-access {
+  min-height: 38rem;
+  padding: 2.5rem 1.5rem;
+  background: var(--background);
+}
+.login-form-shell {
+  width: 372px;
+  max-width: 100%;
+  gap: 2rem;
+}
+.login-kicker {
+  color: var(--accent-icon);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.login-headline {
+  max-width: 20ch;
+  font-size: clamp(2rem, 4vw, 2.125rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.login-description {
+  max-width: 38ch;
+  color: var(--accent-text);
+  font-size: 0.875rem;
+  line-height: 1.8;
+  opacity: 0.8;
+}
+.login-rule {
+  width: 100%;
+  height: 1px;
+  background-image: var(--gradient-rule);
+}
+.login-form-title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.login-control {
+  width: 100%;
+  min-height: 2.7rem;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-control);
+  background: var(--sunken);
+  padding: 0.65rem 0.75rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+.login-control::placeholder {
+  color: var(--faint);
+}
+.login-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+.login-submit {
+  width: 100%;
+  min-height: 2.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--accent-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+.login-submit:not(:disabled):hover {
+  border-color: var(--accent);
+  background: rgba(91, 127, 224, 0.1);
+}
+.login-submit:disabled {
+  cursor: not-allowed;
+  color: var(--faint);
+}
+.login-status {
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.8;
+  text-align: center;
+}
+.login-divider {
+  width: 100%;
+  height: 1px;
+  background-image: var(--gradient-divider);
+}
+
+@media (min-width: 640px) {
+  .login-intro {
+    padding: 2.5rem;
+  }
+  .login-access {
+    padding: 3rem;
+  }
+}
+@media (min-width: 1024px) {
+  .login-layout {
+    grid-template-columns: minmax(400px, 560px) minmax(0, 1fr);
+  }
+  .login-intro,
+  .login-access {
+    min-height: 100vh;
+  }
+  .login-intro {
+    padding: 3.5rem;
+  }
+  .login-access {
+    padding: 3.5rem;
+  }
 }
 
 .ambient-grid {
@@ -63,8 +240,8 @@ a {
   pointer-events: none;
   opacity: 0.32;
   background-image:
-    linear-gradient(rgba(0, 229, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 229, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(138, 166, 238, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138, 166, 238, 0.022) 1px, transparent 1px);
   background-size: 54px 54px;
   mask-image: linear-gradient(to bottom, black 0%, transparent 74%);
 }
@@ -81,18 +258,14 @@ a {
   top: 4rem;
   width: 34rem;
   height: 34rem;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.13), transparent 68%);
+  background: radial-gradient(circle, rgba(91, 127, 224, 0.1), transparent 68%);
 }
 .ambient-glow--purple {
   left: -18rem;
   top: 50%;
   width: 40rem;
   height: 40rem;
-  background: radial-gradient(
-    circle,
-    rgba(124, 58, 237, 0.13),
-    transparent 68%
-  );
+  background: radial-gradient(circle, rgba(0, 20, 73, 0.45), transparent 68%);
 }
 
 .nav-link {
@@ -128,21 +301,10 @@ a {
   width: 2.2rem;
   height: 2.2rem;
   place-items: center;
-  border: 1px solid rgba(0, 229, 255, 0.45);
-  border-radius: 0.7rem;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 229, 255, 0.16),
-    rgba(124, 58, 237, 0.16)
-  );
-  color: var(--cyan);
-  font-family: "Trebuchet MS", sans-serif;
-  font-size: 0.95rem;
-  font-weight: 800;
-  box-shadow:
-    inset 0 0 16px rgba(0, 229, 255, 0.08),
-    0 0 24px rgba(0, 229, 255, 0.08);
-  transform: rotate(-4deg);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-control);
+  background: var(--accent-deep);
+  color: var(--accent-icon);
 }
 .logo-mark--small {
   width: 1.7rem;
@@ -156,23 +318,23 @@ a {
   min-height: 3rem;
   align-items: center;
   gap: 0.65rem;
-  border: 1px solid var(--cyan);
-  border-radius: 0.75rem;
-  background: var(--cyan);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: transparent;
   padding: 0.8rem 1.2rem;
-  color: #041017;
+  color: var(--accent-text);
   font-size: 0.82rem;
-  font-weight: 750;
-  box-shadow: 0 0 28px rgba(0, 229, 255, 0.12);
+  font-weight: 600;
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
 }
 .button:hover {
-  transform: translateY(-2px);
-  background: #5deeff;
-  box-shadow: 0 10px 36px rgba(0, 229, 255, 0.2);
+  border-color: var(--accent);
+  background: rgba(91, 127, 224, 0.12);
+  color: var(--accent-hover);
 }
 .button--small {
   min-height: 2.45rem;
@@ -180,14 +342,14 @@ a {
   font-size: 0.75rem;
 }
 .button--ghost {
-  border-color: var(--border);
-  background: rgba(255, 255, 255, 0.025);
+  border-color: var(--border-soft);
+  background: transparent;
   color: var(--text);
   box-shadow: none;
 }
 .button--ghost:hover {
-  border-color: var(--cyan);
-  background: rgba(0, 229, 255, 0.07);
+  border-color: var(--accent);
+  background: rgba(91, 127, 224, 0.08);
   box-shadow: none;
 }
 
@@ -197,10 +359,10 @@ a {
   gap: 0.65rem;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(0, 229, 255, 0.05);
+  background: rgba(91, 127, 224, 0.07);
   padding: 0.45rem 0.9rem;
   color: var(--cyan);
-  font-family: "Cascadia Code", monospace;
+  font-family: inherit;
   font-size: 0.64rem;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -210,40 +372,38 @@ a {
   height: 0.42rem;
   border-radius: 999px;
   background: var(--green);
-  box-shadow:
-    0 0 0 0.25rem rgba(0, 255, 136, 0.08),
-    0 0 15px var(--green);
+  box-shadow: 0 0 0 0.25rem rgba(138, 166, 238, 0.08);
   animation: pulse 2s ease-in-out infinite;
 }
 .eyebrow {
   margin: 1.8rem 0 0;
   color: var(--cyan);
-  font-family: "Cascadia Code", monospace;
+  font-family: inherit;
   font-size: 0.68rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 .hero-title {
   margin-top: 1rem;
-  font-family: "Trebuchet MS", Inter, sans-serif;
-  font-size: clamp(3.35rem, 8vw, 6.8rem);
-  font-weight: 900;
-  line-height: 0.92;
-  letter-spacing: -0.065em;
+  font-family: inherit;
+  font-size: clamp(3rem, 6.2vw, 5.4rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
 }
 .gradient-text {
-  background: linear-gradient(100deg, var(--cyan), #7dfcc0 60%, var(--green));
+  background: linear-gradient(100deg, var(--accent-text), var(--accent));
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
 }
 .section-title {
   margin-top: 0.9rem;
-  font-family: "Trebuchet MS", Inter, sans-serif;
+  font-family: inherit;
   font-size: clamp(2.25rem, 5vw, 4rem);
-  font-weight: 850;
+  font-weight: 600;
   line-height: 1.02;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.035em;
 }
 .section-shell {
   position: relative;
@@ -257,17 +417,17 @@ a {
 .product-window {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(0, 229, 255, 0.23);
+  border: 1px solid var(--border-frame);
   border-radius: 1.4rem;
   background: linear-gradient(
     145deg,
-    rgba(12, 27, 46, 0.93),
-    rgba(4, 10, 20, 0.96)
+    rgba(14, 21, 48, 0.93),
+    rgba(8, 12, 26, 0.96)
   );
   box-shadow:
     0 40px 100px rgba(0, 0, 0, 0.45),
     inset 0 1px rgba(255, 255, 255, 0.04),
-    0 0 80px rgba(0, 229, 255, 0.05);
+    0 0 80px rgba(91, 127, 224, 0.05);
 }
 .product-window::after {
   content: "";
@@ -293,9 +453,9 @@ a {
   align-items: center;
   gap: 0.4rem;
   white-space: nowrap;
-  border: 1px solid rgba(0, 255, 136, 0.22);
+  border: 1px solid rgba(91, 127, 224, 0.28);
   border-radius: 999px;
-  background: rgba(0, 255, 136, 0.06);
+  background: rgba(91, 127, 224, 0.08);
   padding: 0.35rem 0.6rem;
   color: var(--green);
   font-size: 0.62rem;
@@ -322,7 +482,7 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.3rem;
   padding: 0.16rem 0.3rem;
-  color: rgba(232, 244, 248, 0.55);
+  color: rgba(230, 234, 246, 0.55);
   font-family: inherit;
 }
 .equipment-card {
@@ -339,7 +499,7 @@ a {
   border-color: var(--border-strong);
 }
 .equipment-card--active {
-  border-color: rgba(0, 229, 255, 0.18);
+  border-color: rgba(91, 127, 224, 0.28);
 }
 .equipment-visual {
   display: grid;
@@ -349,22 +509,22 @@ a {
   border-radius: 0.7rem;
   background: radial-gradient(
     circle at 50% 35%,
-    rgba(0, 229, 255, 0.16),
-    rgba(0, 229, 255, 0.025) 68%
+    rgba(91, 127, 224, 0.16),
+    rgba(91, 127, 224, 0.025) 68%
   );
   color: var(--cyan);
 }
 .equipment-visual--purple {
   background: radial-gradient(
     circle at 50% 35%,
-    rgba(124, 58, 237, 0.2),
-    rgba(124, 58, 237, 0.025) 68%
+    rgba(138, 166, 238, 0.15),
+    rgba(138, 166, 238, 0.025) 68%
   );
   color: var(--pink);
 }
 .equipment-visual svg {
   width: 5.7rem;
-  fill: rgba(0, 229, 255, 0.03);
+  fill: rgba(91, 127, 224, 0.03);
   stroke: currentColor;
   stroke-width: 1.4;
 }
@@ -379,7 +539,7 @@ a {
 }
 .mini-status {
   border-radius: 999px;
-  background: rgba(0, 255, 136, 0.08);
+  background: rgba(91, 127, 224, 0.09);
   padding: 0.22rem 0.48rem;
   color: var(--green);
   font-size: 0.56rem;
@@ -392,7 +552,7 @@ a {
   gap: 0.45rem;
   border: 1px solid var(--border);
   border-radius: 0.7rem;
-  background: rgba(5, 10, 20, 0.85);
+  background: rgba(8, 12, 26, 0.9);
   padding: 0.62rem 0.8rem;
   color: var(--muted);
   font-size: 0.63rem;
@@ -432,12 +592,16 @@ a {
   width: 14rem;
   height: 14rem;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.08), transparent 65%);
+  background: radial-gradient(
+    circle,
+    rgba(91, 127, 224, 0.08),
+    transparent 65%
+  );
 }
 .step-card:hover {
   transform: translateY(-5px);
   border-color: var(--border-strong);
-  background: rgba(0, 229, 255, 0.035);
+  background: rgba(91, 127, 224, 0.05);
 }
 .step-icon {
   display: grid;
@@ -446,7 +610,7 @@ a {
   place-items: center;
   border: 1px solid var(--border);
   border-radius: 0.75rem;
-  background: rgba(0, 229, 255, 0.06);
+  background: rgba(91, 127, 224, 0.08);
   color: var(--cyan);
 }
 
@@ -457,7 +621,11 @@ a {
   border: 1px solid var(--border);
   border-radius: 1.5rem;
   background:
-    radial-gradient(circle at center, rgba(0, 229, 255, 0.07), transparent 38%),
+    radial-gradient(
+      circle at center,
+      rgba(91, 127, 224, 0.08),
+      transparent 38%
+    ),
     rgba(255, 255, 255, 0.02);
 }
 .benefit-panel::before,
@@ -465,12 +633,12 @@ a {
   content: "";
   position: absolute;
   inset: 15%;
-  border: 1px solid rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(91, 127, 224, 0.12);
   border-radius: 999px;
 }
 .benefit-panel::after {
   inset: 30%;
-  border-color: rgba(124, 58, 237, 0.16);
+  border-color: rgba(138, 166, 238, 0.16);
 }
 .benefit-orbit {
   position: absolute;
@@ -487,14 +655,14 @@ a {
   border-radius: 1.5rem;
   background: linear-gradient(
     145deg,
-    rgba(0, 229, 255, 0.16),
-    rgba(124, 58, 237, 0.12)
+    rgba(91, 127, 224, 0.16),
+    rgba(0, 20, 73, 0.22)
   );
   color: var(--cyan);
-  font-family: "Trebuchet MS", sans-serif;
+  font-family: inherit;
   font-size: 1.4rem;
   font-weight: 900;
-  box-shadow: 0 0 60px rgba(0, 229, 255, 0.14);
+  box-shadow: 0 0 60px rgba(91, 127, 224, 0.14);
   transform: rotate(-6deg);
 }
 .benefit-stat {
@@ -504,7 +672,7 @@ a {
   gap: 0.25rem;
   border: 1px solid var(--border);
   border-radius: 0.8rem;
-  background: rgba(5, 10, 20, 0.82);
+  background: rgba(8, 12, 26, 0.9);
   padding: 0.8rem 1rem;
   backdrop-filter: blur(10px);
 }
@@ -540,12 +708,12 @@ a {
   align-items: end;
   gap: 3rem;
   overflow: hidden;
-  border: 1px solid rgba(0, 229, 255, 0.22);
+  border: 1px solid var(--border-frame);
   border-radius: 1.5rem;
   background: linear-gradient(
     130deg,
-    rgba(0, 229, 255, 0.08),
-    rgba(124, 58, 237, 0.09)
+    rgba(0, 20, 73, 0.52),
+    rgba(91, 127, 224, 0.09)
   );
   padding: clamp(1.5rem, 5vw, 4rem);
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);

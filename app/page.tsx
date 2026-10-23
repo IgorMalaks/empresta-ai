@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { BrandMark } from "./_components/brand-mark";
 
 type IconName =
   "search" | "calendar" | "shield" | "arrow" | "check" | "menu" | "close";
@@ -86,7 +87,7 @@ export default function Home() {
       <div className="ambient-glow ambient-glow--cyan" aria-hidden="true" />
       <div className="ambient-glow ambient-glow--purple" aria-hidden="true" />
 
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--border)] bg-[rgba(5,10,20,.78)] backdrop-blur-xl">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--border)] bg-[rgba(8,12,26,.88)] backdrop-blur-xl">
         <nav
           className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10"
           aria-label="Navegação principal"
@@ -96,9 +97,7 @@ export default function Home() {
             className="group flex items-center gap-3"
             onClick={closeMenu}
           >
-            <span className="logo-mark" aria-hidden="true">
-              E
-            </span>
+            <BrandMark />
             <span className="font-display text-lg font-extrabold tracking-[-0.03em]">
               empresta<span className="text-[var(--cyan)]">aí</span>
             </span>
@@ -202,7 +201,7 @@ export default function Home() {
               "Acesso simples",
             ].map((item) => (
               <span className="flex items-center gap-2" key={item}>
-                <span className="grid size-5 place-items-center rounded-full bg-[rgba(0,255,136,.1)] text-[var(--green)]">
+                <span className="grid size-5 place-items-center rounded-full bg-[rgba(91,127,224,.1)] text-[var(--accent-icon)]">
                   <Icon name="check" className="size-3.5" />
                 </span>
                 {item}
@@ -219,7 +218,7 @@ export default function Home() {
                 <span className="window-dot bg-[var(--yellow)]" />
                 <span className="window-dot bg-[var(--green)]" />
               </div>
-              <span className="font-mono text-[10px] uppercase tracking-[.2em] text-[var(--muted)]">
+              <span className="text-[10px] uppercase tracking-[.2em] text-[var(--muted)]">
                 Exemplo visual
               </span>
             </div>
@@ -227,7 +226,7 @@ export default function Home() {
             <div className="p-5 sm:p-7">
               <div className="mb-6 flex items-end justify-between gap-4">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[var(--cyan)]">
+                  <p className="text-[10px] uppercase tracking-[.2em] text-[var(--accent-icon)]">
                     Olá, equipe
                   </p>
                   <h2 className="font-display mt-2 text-2xl font-bold">
@@ -284,7 +283,7 @@ export default function Home() {
 
               <div className="mt-5 flex items-center justify-between rounded-xl border border-[var(--border)] bg-[rgba(255,255,255,.025)] px-4 py-3">
                 <div className="flex items-center gap-3">
-                  <span className="grid size-9 place-items-center rounded-lg bg-[rgba(124,58,237,.13)] text-[var(--pink)]">
+                  <span className="grid size-9 place-items-center rounded-lg bg-[rgba(91,127,224,.13)] text-[var(--accent-text)]">
                     <Icon name="calendar" className="size-4" />
                   </span>
                   <div>
@@ -327,7 +326,7 @@ export default function Home() {
                 <span className="step-icon">
                   <Icon name={step.icon} />
                 </span>
-                <span className="font-mono text-xs tracking-[.2em] text-[var(--border-strong)]">
+                <span className="text-xs tracking-[.2em] text-[var(--accent-icon)]">
                   {step.number}
                 </span>
               </div>
@@ -432,7 +431,7 @@ export default function Home() {
 
       <footer className="mx-auto flex max-w-7xl flex-col gap-4 border-t border-[var(--border)] px-5 py-8 text-xs text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10">
         <div className="flex items-center gap-2">
-          <span className="logo-mark logo-mark--small">E</span>
+          <BrandMark small />
           <span>Empresta Aí</span>
         </div>
         <p>Compartilhar começa por saber onde encontrar.</p>

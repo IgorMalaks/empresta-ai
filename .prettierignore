@@ -1,4 +1,8 @@
 .next/
+.next-build-verify/
+_incoming_review/
+artifacts/
+src/generated/prisma/
 node_modules/
 Aula *.html
 Aula *_files/

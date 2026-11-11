@@ -1,15 +1,14 @@
 # Empresta Aí
 
-Projeto web em preparação para organizar equipamentos compartilhados. A página
-inicial existe, mas os fluxos e as regras de negócio ainda não foram aprovados no PRD.
-As decisões técnicas estão no ADR-001.
+Projeto web para organizar equipamentos compartilhados. O estado da versão
+prática e as pendências de produção estão em `ENTREGA.md`.
 
 ## Onde olhar
 
 - `README.md`: estado da preparação e próximos passos.
-- `docs/PRD.md`: rascunho de requisitos; ainda não é um PRD aprovado.
+- `docs/PRD.md`: requisitos da versão prática.
 - `docs/specs/`: especificações e critérios de cada implementação.
-- `docs/adr/001-stack.md`: registro parcial das escolhas técnicas.
+- `docs/adr/001-stack.md` e `docs/adr/003-pratica-stack-e-concorrencia.md`: escolhas técnicas e recorte da versão prática, conforme a spec 009.
 - `rules/restrictions.md`: ler antes de qualquer tarefa.
 - `docs/andar-zero.md`: proposta de critérios para o esqueleto técnico.
 
@@ -27,6 +26,7 @@ antes de implementar a parte afetada. Rascunhos não são decisões aceitas.
 - Ler o ADR e as restrições antes de propor mudanças estruturais.
 - Não preencher as escolhas pendentes por conta própria.
 - Executar mudanças dentro do escopo autorizado e relatar sua verificação.
+- Antes de declarar uma spec pronta, acione o verificador em contexto separado com fontes e evidências sanitizadas, conforme `.agents/verificador/CONTRACT.md`.
 - Registrar comandos apenas depois de executados com sucesso neste projeto.
 
 ## Comandos verificados
@@ -45,9 +45,9 @@ antes de implementar a parte afetada. Rascunhos não são decisões aceitas.
 
 ## Estado atual do projeto
 
-Existe uma página inicial responsiva em `/`, criada com Next.js, TypeScript e
-Tailwind CSS. O lint, a formatação e o build foram verificados. Não há banco
-provisionado, API, migrations, autenticação ou suíte de testes.
+O código inclui Supabase Auth, catálogo, empréstimos, migração Prisma e
+testes locais. Consulte `ENTREGA.md` para saber quais verificações foram
+concluídas no ambiente publicado.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

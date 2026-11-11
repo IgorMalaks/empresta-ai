@@ -17,5 +17,13 @@ Desktop.ini
 # Dependências, artefatos do Next.js e relatórios locais.
 node_modules/
 .next/
+.next-build-verify/
 out/
 coverage/
+src/generated/prisma/
+
+# Artefatos privados/intermediários; evidências finais sanitizadas ficam em docs/evidencias.
+artifacts/
+*.tsbuildinfo
+/_incoming_review/
+/.vercel/

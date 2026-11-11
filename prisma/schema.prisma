@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["public"]
+}
+
+model Equipment {
+  id           String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patrimonio   String @unique
+  nome         String
+  categoria    String
+  situacao     String @default("disponivel")
+  imageUrl     String @map("image_url")
+  pexelsId     BigInt @unique @map("pexels_id")
+  photographer String
+  sourceUrl    String @map("source_url")
+  licenseUrl   String @map("license_url")
+  imageSha256  String @unique @map("image_sha256")
+  loans        Loan[]
+
+  @@map("equipments")
+  @@schema("public")
+}
+
+model Loan {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String    @map("user_id") @db.Uuid
+  equipmentId String    @map("equipment_id") @db.Uuid
+  requestedAt DateTime  @default(dbgenerated("clock_timestamp()")) @map("requested_at") @db.Timestamptz(6)
+  dueOn       DateTime  @map("due_on") @db.Date
+  returnedAt  DateTime? @map("returned_at") @db.Timestamptz(6)
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  // Open-equipment uniqueness and CHECK constraints live in the SQL migration.
+  @@index([userId], map: "loans_user_id_idx")
+  @@map("loans")
+  @@schema("public")
+}

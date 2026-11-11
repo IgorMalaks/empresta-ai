@@ -1,0 +1,72 @@
+export const CATALOG = Object.freeze(
+  [
+    [
+      "TI-0001",
+      "Notebook 14 polegadas",
+      "notebook",
+      "disponivel",
+      "laptop on white desk",
+    ],
+    [
+      "TI-0002",
+      "Notebook 15 polegadas",
+      "notebook",
+      "disponivel",
+      "open laptop minimal desk",
+    ],
+    [
+      "TI-0003",
+      "Notebook 13 polegadas",
+      "notebook",
+      "disponivel",
+      "laptop closeup keyboard",
+    ],
+    [
+      "TI-0004",
+      "Notebook 15 polegadas",
+      "notebook",
+      "manutencao",
+      "closed laptop on table",
+    ],
+    [
+      "TI-0005",
+      "Monitor 24 polegadas",
+      "monitor",
+      "disponivel",
+      "computer monitor on desk",
+    ],
+    [
+      "TI-0006",
+      "Monitor 27 polegadas",
+      "monitor",
+      "disponivel",
+      "monitor screen office desk",
+    ],
+    [
+      "TI-0007",
+      "Monitor 22 polegadas",
+      "monitor",
+      "manutencao",
+      "black computer screen",
+    ],
+    ["TI-0008", "Cabo HDMI 2 m", "cabo", "disponivel", "hdmi cable"],
+    [
+      "TI-0009",
+      "Cabo USB-C 1 m",
+      "cabo",
+      "disponivel",
+      "usb cable white background",
+    ],
+    ["TI-0010", "Cabo de rede 3 m", "cabo", "manutencao", "ethernet cable"],
+    ["TI-0011", "Webcam Full HD", "camera", "disponivel", "webcam"],
+    [
+      "TI-0012",
+      "Câmera compacta",
+      "camera",
+      "disponivel",
+      "compact camera on table",
+    ],
+  ].map(([patrimonio, nome, categoria, situacao, busca]) =>
+    Object.freeze({ patrimonio, nome, categoria, situacao, busca }),
+  ),
+);

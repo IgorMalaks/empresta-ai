@@ -1,28 +1,38 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
-import { Open_Sans } from "next/font/google";
-
+import Link from "next/link";
 import "./globals.css";
 
-const openSans = Open_Sans({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "600"],
-  variable: "--font-open-sans",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Empresta Aí | Equipamentos que circulam",
-  description:
-    "Uma experiência simples para descobrir, solicitar e acompanhar equipamentos compartilhados.",
+  title: "Empresta Aí",
+  description: "Equipamentos compartilhados, empréstimos sem complicação.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: ReactNode }>) {
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="pt-BR" className={openSans.variable}>
-      <body>{children}</body>
+    <html lang="pt-BR">
+      <body>
+        <a className="skip-link" href="#conteudo">
+          Pular para o conteúdo
+        </a>
+        <header className="site-header">
+          <div className="container header-inner">
+            <Link className="brand" href="/">
+              Empresta <span>Aí</span>
+            </Link>
+            <span className="header-caption">Mais uso. Menos desperdício.</span>
+          </div>
+        </header>
+        <main id="conteudo" className="container" tabIndex={-1}>
+          {children}
+        </main>
+        <footer className="container site-footer">
+          Empresta Aí · Equipamentos para o seu dia a dia.
+        </footer>
+      </body>
     </html>
   );
 }

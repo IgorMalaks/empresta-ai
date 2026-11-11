@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:empresta-ai:verification:report:v1",
+  "title": "Independent spec acceptance report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "round",
+    "spec",
+    "sourceSnapshot",
+    "review",
+    "criteria",
+    "evidenceSnapshotSha256",
+    "status",
+    "humanCommits"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "round": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "timestamp", "directory"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$"
+        },
+        "timestamp": { "$ref": "#/$defs/timestamp" },
+        "directory": { "$ref": "#/$defs/path" }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "sha256"],
+      "properties": {
+        "id": { "enum": ["006", "007", "008", "009"] },
+        "path": { "$ref": "#/$defs/path" },
+        "sha256": { "$ref": "#/$defs/hash" }
+      }
+    },
+    "sourceSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sha256", "files"],
+      "properties": {
+        "sha256": { "$ref": "#/$defs/hash" },
+        "files": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "$ref": "#/$defs/path" },
+          "additionalProperties": { "$ref": "#/$defs/hash" }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewer",
+        "implementer",
+        "harness",
+        "context",
+        "readOnly",
+        "productionIsolation"
+      ],
+      "properties": {
+        "reviewer": { "$ref": "#/$defs/text" },
+        "implementer": { "$ref": "#/$defs/text" },
+        "harness": { "$ref": "#/$defs/text" },
+        "context": { "const": "CLEAN" },
+        "readOnly": { "const": true },
+        "productionIsolation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reason", "evidenceIds"],
+          "properties": {
+            "status": { "$ref": "#/$defs/status" },
+            "reason": { "$ref": "#/$defs/text" },
+            "evidenceIds": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/text" },
+              "uniqueItems": true
+            }
+          }
+        }
+      }
+    },
+    "criteria": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 10,
+      "items": { "$ref": "#/$defs/criterion" }
+    },
+    "evidenceSnapshotSha256": { "$ref": "#/$defs/hash" },
+    "status": { "$ref": "#/$defs/status" },
+    "humanCommits": { "const": "PENDENTE" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "spec": { "properties": { "id": { "const": "006" } } } }
+      },
+      "then": {
+        "properties": {
+          "criteria": {
+            "minItems": 8,
+            "maxItems": 8,
+            "items": { "properties": { "id": { "pattern": "^CA006-0[1-8]$" } } }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "spec": { "properties": { "id": { "const": "007" } } } }
+      },
+      "then": {
+        "properties": {
+          "criteria": {
+            "minItems": 9,
+            "maxItems": 9,
+            "items": { "properties": { "id": { "pattern": "^CA007-0[1-9]$" } } }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "spec": { "properties": { "id": { "const": "008" } } } }
+      },
+      "then": {
+        "properties": {
+          "criteria": {
+            "minItems": 10,
+            "maxItems": 10,
+            "items": {
+              "properties": { "id": { "pattern": "^CA008-(0[1-9]|10)$" } }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "spec": {
+            "properties": {
+              "id": {
+                "const": "009"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "criteria": {
+            "minItems": 5,
+            "maxItems": 5,
+            "items": {
+              "properties": {
+                "id": {
+                  "pattern": "^CA009-0[1-5]$"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 20000,
+      "pattern": "\\S"
+    },
+    "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "status": { "enum": ["APROVADO", "REPROVADO", "PENDENTE"] },
+    "path": {
+      "type": "string",
+      "maxLength": 1023,
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*:)(?!.*[\\u0000-\\u001f])(?!(?:.*?/)?\\.{1,2}(?:/|$))[^/]+(?:/[^/]+)*$"
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "reason", "evidence"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^CA00[678]-(0[1-9]|10)$" },
+        "status": { "$ref": "#/$defs/status" },
+        "reason": { "$ref": "#/$defs/text" },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "APROVADO" } } },
+          "then": {
+            "properties": {
+              "evidence": {
+                "minItems": 1,
+                "contains": {
+                  "properties": {
+                    "kind": { "enum": ["test", "human"] },
+                    "result": { "const": "PASS" }
+                  }
+                },
+                "items": {
+                  "properties": { "result": { "enum": ["PASS", "OBSERVED"] } }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "status": { "const": "REPROVADO" } } },
+          "then": {
+            "properties": {
+              "evidence": {
+                "contains": { "properties": { "result": { "const": "FAIL" } } }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "path",
+        "snapshotPath",
+        "sha256",
+        "lines",
+        "testId",
+        "observation",
+        "result",
+        "capturedAt"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/text" },
+        "kind": { "enum": ["source", "test", "human", "isolation"] },
+        "path": { "$ref": "#/$defs/path" },
+        "snapshotPath": { "$ref": "#/$defs/path" },
+        "sha256": { "$ref": "#/$defs/hash" },
+        "lines": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "integer", "minimum": 1 }
+        },
+        "testId": { "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/text" }] },
+        "observation": { "$ref": "#/$defs/text" },
+        "result": { "enum": ["PASS", "FAIL", "OBSERVED"] },
+        "capturedAt": { "$ref": "#/$defs/timestamp" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "test" } } },
+          "then": {
+            "properties": {
+              "testId": { "$ref": "#/$defs/text" },
+              "result": { "enum": ["PASS", "FAIL"] }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

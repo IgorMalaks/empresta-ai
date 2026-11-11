@@ -2,28 +2,64 @@
   "name": "empresta-ai",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
+    "prebuild": "prisma generate",
     "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "db:generate": "prisma generate",
+    "db:validate": "prisma validate",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.mjs",
+    "test:db": "node --test tests/db*.test.mjs",
+    "images:prepare": "node --env-file-if-exists=.env.local scripts/images/prepare.mjs prepare",
+    "images:review": "node scripts/images/prepare.mjs review",
+    "images:validate": "node scripts/images/prepare.mjs validate",
+    "human:seed": "node scripts/human/load-initial-data.mjs",
+    "preverify": "prisma generate",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run format:check && npm run build",
+    "spec:check": "node scripts/verification/finalize-all.mjs",
+    "images:list": "node scripts/images/prepare.mjs list",
+    "images:report": "node scripts/images/prepare.mjs report",
+    "spec:snapshot": "node scripts/verification/snapshot.mjs",
+    "spec:report": "node scripts/verification/check.mjs"
   },
   "dependencies": {
-    "next": "^16.3.6",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "@next/env": "16.4.3",
+    "@prisma/adapter-pg": "7.10.1",
+    "@prisma/client": "7.10.1",
+    "next": "16.4.3",
+    "pg": "8.23.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "zod": "4.6.7",
+    "sharp": "0.35.5",
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.118.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^26.6.3",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "eslint": "^9.39.1",
-    "eslint-config-next": "^16.3.6",
-    "prettier": "^3.9.9",
-    "tailwindcss": "^4.3.3",
-    "typescript": "^6.0.3"
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.6.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.1",
+    "eslint-config-next": "16.4.3",
+    "prettier": "3.9.9",
+    "prisma": "7.10.1",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "tsx": "4.23.15",
+    "@types/pg": "8.23.1",
+    "@electric-sql/pglite": "0.5.13"
+  },
+  "overrides": {
+    "source-map-js": "1.2.2",
+    "minimatch": "11.0.3"
   }
 }

@@ -1,7 +1,8 @@
 # Andar zero — proposta de verificação da stack
 
-**Status:** rascunho baseado no material da Aula 8; não implementado nem validado.
-Os critérios abaixo são uma proposta para revisão quando a stack for informada.
+**Status:** rascunho baseado no material da Aula 8; parcialmente atendido pela
+[spec de conexão Supabase/PostgreSQL](specs/005-conexao-supabase-postgres/spec.md).
+Os critérios abaixo continuam como proposta para revisão.
 
 Isto não é uma especificação de funcionalidade do produto. O objetivo é verificar
 se as tecnologias do [ADR-001](adr/001-stack.md) funcionam juntas, antes de

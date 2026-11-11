@@ -5,5 +5,14 @@ import nextTypeScript from "eslint-config-next/typescript";
 export default defineConfig([
   ...nextVitals,
   ...nextTypeScript,
-  globalIgnores([".next/**", "node_modules/**", "Aula*/**", "stacks_H.md"]),
+  globalIgnores([
+    ".next/**",
+    ".next-build-verify/**",
+    "_incoming_review/**",
+    "artifacts/**",
+    "node_modules/**",
+    "src/generated/prisma/**",
+    "Aula*/**",
+    "stacks_H.md",
+  ]),
 ]);

@@ -17,3 +17,11 @@
 A skill descreve o processo. O código valida tamanho, duplicidade, origem e metadados. Uma pessoa revisa logos, texto, pessoas e telas. A preparação local só acessa Pixabay e a carga exige um comando separado com credenciais administrativas.
 
 O verificador recebe o código e a especificação em contexto separado e devolve o estado de cada critério com evidência. Relatórios de outra árvore de código permanecem históricos. Pendências em produção não contam como aprovadas. A tag de entrega fica para quando a versão publicada tiver sido conferida.
+
+## Evidências desta integração
+
+- **CA009-01 aprovado em revisão local.** A busca oficial baixou 36 candidatos. O verificador conferiu JPEGs de 800 × 600, IDs e hashes únicos, origem e autoria. A seleção visual das 12 fotos finais permanece pendente.
+- **CA009-02 aprovado em revisão local.** O verificador renderizou os créditos de Pixabay e de Pexels, com os respectivos links.
+- **CA009-03 pendente.** A consulta `SELECT 1` retornou sucesso no editor SQL do Supabase. Na mesma consulta, as tabelas de equipamentos, empréstimos e histórico do Prisma estavam ausentes. Falta confirmar a conexão da aplicação e uma sessão válida.
+- **CA009-04 pendente.** A verificação da conta no Supabase Auth permanece aberta.
+- **CA009-05 pendente.** O commit `b3a7ff2` passou em 91 testes locais, incluindo SQL no PGlite. A Vercel concluiu o deploy de prévia. Faltam o teste de concorrência com PostgreSQL e múltiplas conexões e a verificação de login e carga no ambiente publicado.

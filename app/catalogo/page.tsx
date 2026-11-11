@@ -1,6 +1,6 @@
+import { DashboardLayout } from "@/components/dashboard-layout";
 import { EquipmentPhoto } from "@/components/equipment-photo";
-import { daySP } from "@/components/loan-dates";
-import { Navigation } from "@/components/navigation";
+import { daySP, formatDueOn } from "@/components/loan-dates";
 import { PhotoCredit, PhotographerCredit } from "@/components/photo-credit";
 import { RequestLoanForm } from "@/components/request-loan-form";
 import { requireUser } from "@/server/auth/supabase";
@@ -29,71 +29,80 @@ export default async function CatalogPage() {
     emprestado: "Emprestado",
   };
   return (
-    <>
-      <Navigation current="catalogo" />
-      <section className="page-heading">
-        <p className="eyebrow">Escolha o que precisa</p>
-        <h1>Catálogo de equipamentos</h1>
-        <p>
-          Empréstimo imediato por 14 dias úteis. Sábados e domingos não contam;
-          feriados contam nesta versão.
-        </p>
-        <p className="counter">{loans.length} de 5 empréstimos em aberto</p>
+    <DashboardLayout current="catalogo">
+      <section className="panel loan-overview" aria-labelledby="open-loans">
+        <h2 id="open-loans">Meus empréstimos em aberto</h2>
+        {loans.length === 0 ? (
+          <p className="muted">Você não tem empréstimos em aberto.</p>
+        ) : (
+          <ul>
+            {loans.map((loan) => (
+              <li key={loan.id}>
+                {loan.equipment.nome} · Vence em{" "}
+                <time dateTime={loan.dueOn.toISOString().slice(0, 10)}>
+                  {formatDueOn(loan.dueOn)}
+                </time>
+              </li>
+            ))}
+          </ul>
+        )}
+        <p className="muted">{loans.length} de 5 · Prazo de 14 dias úteis</p>
       </section>
       {blockedReason && (
         <p className="notice" role="status">
           {blockedReason}
         </p>
       )}
-      <PhotoCredit
-        sources={equipments.map((equipment) => equipment.sourceUrl)}
-      />
-      {equipments.length === 0 ? (
-        <section className="panel">
-          <h2>O catálogo ainda está vazio</h2>
-          <p>
-            Não há equipamentos cadastrados para exibir. A preparação dos dados
-            deve ser concluída pelo responsável.
-          </p>
-        </section>
-      ) : (
-        <ul className="equipment-grid">
-          {equipments.map((equipment) => {
-            const status = statuses[equipment.situacao] ?? "Indisponível";
-            const disabledReason =
-              equipment.situacao !== "disponivel" ? status : blockedReason;
-            return (
-              <li className="panel equipment-card" key={equipment.id}>
-                <EquipmentPhoto
-                  imageUrl={equipment.imageUrl}
-                  name={equipment.nome}
-                />
-                <div className="card-body">
-                  <div className="card-meta">
-                    <span>{equipment.patrimonio}</span>
-                    <span
-                      className={`badge ${equipment.situacao === "disponivel" ? "badge-available" : "badge-unavailable"}`}
-                    >
-                      {status}
-                    </span>
-                  </div>
-                  <h2>{equipment.nome}</h2>
-                  <p className="muted">{equipment.categoria}</p>
-                  <PhotographerCredit
-                    photographer={equipment.photographer}
-                    sourceUrl={equipment.sourceUrl}
-                  />
-                  <RequestLoanForm
-                    equipmentId={equipment.id}
+      <section aria-labelledby="equipment-title">
+        <div className="equipment-heading">
+          <h2 id="equipment-title">Equipamentos</h2>
+          <PhotoCredit
+            sources={equipments.map((equipment) => equipment.sourceUrl)}
+          />
+        </div>
+        {equipments.length === 0 ? (
+          <section className="panel empty-state">
+            <p>Nenhum equipamento cadastrado.</p>
+          </section>
+        ) : (
+          <ul className="equipment-grid">
+            {equipments.map((equipment) => {
+              const status = statuses[equipment.situacao] ?? "Indisponível";
+              const disabledReason =
+                equipment.situacao !== "disponivel" ? status : blockedReason;
+              return (
+                <li className="panel equipment-card" key={equipment.id}>
+                  <EquipmentPhoto
+                    imageUrl={equipment.imageUrl}
                     name={equipment.nome}
-                    disabledReason={disabledReason}
                   />
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </>
+                  <div className="card-body">
+                    <div className="card-meta">
+                      <span>{equipment.patrimonio}</span>
+                      <span
+                        className={`badge ${equipment.situacao === "disponivel" ? "badge-available" : "badge-unavailable"}`}
+                      >
+                        {status}
+                      </span>
+                    </div>
+                    <h3 className="font-semibold">{equipment.nome}</h3>
+                    <p className="muted">{equipment.categoria}</p>
+                    <PhotographerCredit
+                      photographer={equipment.photographer}
+                      sourceUrl={equipment.sourceUrl}
+                    />
+                    <RequestLoanForm
+                      equipmentId={equipment.id}
+                      name={equipment.nome}
+                      disabledReason={disabledReason}
+                    />
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
+    </DashboardLayout>
   );
 }

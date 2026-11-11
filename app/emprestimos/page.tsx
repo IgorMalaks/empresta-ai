@@ -1,7 +1,7 @@
 import Link from "next/link";
+import { DashboardLayout } from "@/components/dashboard-layout";
 import { EquipmentPhoto } from "@/components/equipment-photo";
 import { daySP, formatDueOn } from "@/components/loan-dates";
-import { Navigation } from "@/components/navigation";
 import { PhotoCredit } from "@/components/photo-credit";
 import { requireUser } from "@/server/auth/supabase";
 import { listMyLoans } from "@/server/queries";
@@ -16,11 +16,8 @@ export default async function LoansPage() {
     (loan) => loan.dueOn.toISOString().slice(0, 10) < today,
   );
   return (
-    <>
-      <Navigation current="emprestimos" />
+    <DashboardLayout current="emprestimos">
       <section className="page-heading">
-        <p className="eyebrow">Tudo sob controle</p>
-        <h1>Meus empréstimos</h1>
         <p>Aqui aparecem apenas os seus empréstimos em aberto.</p>
         <p className="counter">{loans.length} de 5 empréstimos em aberto</p>
         <p className="muted">
@@ -93,6 +90,6 @@ export default async function LoansPage() {
           })}
         </ul>
       )}
-    </>
+    </DashboardLayout>
   );
 }

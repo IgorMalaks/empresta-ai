@@ -135,6 +135,7 @@ describe("fail-closed spec report validation", () => {
     ["007", 9],
     ["008", 10],
     ["009", 5],
+    ["010", 5],
   ]) {
     it(`should require exactly ${count} criteria for spec ${spec}`, async (t) => {
       const { root, report } = await fixture(t, spec);

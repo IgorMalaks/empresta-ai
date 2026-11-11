@@ -35,7 +35,7 @@
       "additionalProperties": false,
       "required": ["id", "path", "sha256"],
       "properties": {
-        "id": { "enum": ["006", "007", "008", "009"] },
+        "id": { "enum": ["006", "007", "008", "009", "010"] },
         "path": { "$ref": "#/$defs/path" },
         "sha256": { "$ref": "#/$defs/hash" }
       }
@@ -89,7 +89,7 @@
     },
     "criteria": {
       "type": "array",
-      "minItems": 8,
+      "minItems": 5,
       "maxItems": 10,
       "items": { "$ref": "#/$defs/criterion" }
     },
@@ -169,6 +169,34 @@
           }
         }
       }
+    },
+    {
+      "if": {
+        "properties": {
+          "spec": {
+            "properties": {
+              "id": {
+                "const": "010"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "criteria": {
+            "minItems": 5,
+            "maxItems": 5,
+            "items": {
+              "properties": {
+                "id": {
+                  "pattern": "^CA010-0[1-5]$"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   ],
   "$defs": {
@@ -195,7 +223,10 @@
       "additionalProperties": false,
       "required": ["id", "status", "reason", "evidence"],
       "properties": {
-        "id": { "type": "string", "pattern": "^CA00[678]-(0[1-9]|10)$" },
+        "id": {
+          "type": "string",
+          "pattern": "^CA(?:00[6789]|010)-(0[1-9]|10)$"
+        },
         "status": { "$ref": "#/$defs/status" },
         "reason": { "$ref": "#/$defs/text" },
         "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }

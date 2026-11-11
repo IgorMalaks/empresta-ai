@@ -46,7 +46,7 @@ describe("database transport boundary", () => {
     assert.throws(() => databaseConfig(undefined, true), /não configurado/));
   it("requires Auth and the database to belong to the same Supabase project", () => {
     const pooler =
-      "postgresql://postgres.example:synthetic@aws-0-us-east-2.pooler.supabase.com:6543/postgres";
+      "postgresql://postgres.example@aws-0-us-east-2.pooler.supabase.com:6543/postgres";
     assert.deepEqual(databaseConfig(pooler, true, project).ssl, {
       rejectUnauthorized: true,
       ca: supabaseDatabaseCa,

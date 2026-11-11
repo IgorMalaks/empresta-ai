@@ -7,6 +7,7 @@ export const COUNTS = Object.freeze({
   "007": 9,
   "008": 10,
   "009": 5,
+  "010": 5,
 });
 export const STATUSES = ["APROVADO", "REPROVADO", "PENDENTE"];
 export const sha256 = (value) =>

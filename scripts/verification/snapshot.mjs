@@ -95,7 +95,7 @@ if (
     const [specId, roundId, ...extra] = process.argv.slice(2);
     assert(
       extra.length === 0,
-      "usage: snapshot.mjs 006|007|008|009 <unique-round-id>",
+      "usage: snapshot.mjs 006|007|008|009|010 <unique-round-id>",
     );
     const manifest = await createSnapshot(root, { specId, roundId });
     process.stdout.write(`${JSON.stringify(manifest, null, 2)}\n`);

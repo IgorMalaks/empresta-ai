@@ -4,6 +4,8 @@
 
 Use o mesmo projeto Supabase para Auth, PostgreSQL e Storage. Em desenvolvimento, copie `.env.example` para `.env.local` e preencha somente os valores necessários. Na Vercel, configure `APP_URL` com a origem do ambiente publicado, `SUPABASE_URL` e `SUPABASE_PUBLISHABLE_KEY` com os dados do projeto e `DATABASE_URL` com a conexão do pooler de transação (porta 6543). Deixe `DIRECT_URL` no ambiente onde rodará o Prisma, com a conexão direta ou o pooler de sessão (porta 5432).
 
+Para o Prisma Migrate, use `sslmode=require`, `sslaccept=strict` e `sslcert` com o caminho do certificado público baixado em **Database → Settings → SSL Configuration**. A aplicação usa a CA oficial do Supabase nas conexões com o pooler e verifica o certificado e o hostname.
+
 Confira o histórico antes de aplicar a migração ao banco selecionado:
 
 ```sh

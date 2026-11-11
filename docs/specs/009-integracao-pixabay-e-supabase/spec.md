@@ -8,6 +8,7 @@
 - Usar exclusivamente a API do Pixabay para novas fotos do inventário, conforme a instrução mais recente. Esta é uma divergência do enunciado da prática, que exige Pexels.
 - Buscar candidatos localmente, com cache de 24 horas, e preparar JPEGs de 800 × 600. Guardar autoria, página da foto, licença e hash. Mostrar o crédito da fonte na tela. A revisão visual precede a publicação.
 - Separar a configuração de Auth e PostgreSQL da preparação das fotos. Os segredos ficam no ambiente local ou nas configurações do serviço correspondente.
+- Usar a CA oficial do Supabase nas conexões PostgreSQL com o projeto hospedado e manter a validação do certificado e do hostname.
 - Provisionar o professor pelo Supabase Auth, com acesso comum, sem alterar a senha de conta preexistente e sem criar empréstimos. Validar operações de empréstimo com outra conta e banco de teste.
 
 ## Critérios de aceite

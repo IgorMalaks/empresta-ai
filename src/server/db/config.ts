@@ -1,3 +1,5 @@
+import { supabaseDatabaseCa } from "./supabase-ca";
+
 export function databaseConfig(
   value: string | undefined,
   production: boolean,
@@ -9,6 +11,9 @@ export function databaseConfig(
     if (!["postgres:", "postgresql:"].includes(url.protocol) || url.hash)
       throw new Error();
     const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
+    const supabaseHost =
+      /^db\.[a-z0-9]+\.supabase\.co$/.test(url.hostname) ||
+      /^[a-z0-9-]+\.pooler\.supabase\.com$/.test(url.hostname);
     if (production) {
       const project = new URL(supabaseUrl ?? "");
       const ref = /^([a-z0-9]+)\.supabase\.co$/.exec(project.hostname)?.[1];
@@ -44,7 +49,12 @@ export function databaseConfig(
     return {
       connectionString: value,
       ssl:
-        production || !local ? { rejectUnauthorized: true } : (false as const),
+        production || !local
+          ? {
+              rejectUnauthorized: true,
+              ...(supabaseHost ? { ca: supabaseDatabaseCa } : {}),
+            }
+          : (false as const),
     };
   } catch {
     throw new Error("Configuração de banco inválida ou insegura.");

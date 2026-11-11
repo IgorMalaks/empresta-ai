@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { databaseConfig } from "../src/server/db/config.ts";
+import { supabaseDatabaseCa } from "../src/server/db/supabase-ca.ts";
 
 const project = "https://example.supabase.co";
 
@@ -12,7 +13,7 @@ describe("database transport boundary", () => {
         true,
         project,
       ).ssl,
-      { rejectUnauthorized: true },
+      { rejectUnauthorized: true, ca: supabaseDatabaseCa },
     ));
   it("should reject an explicit SSL disable option", () =>
     assert.throws(() =>
@@ -46,7 +47,10 @@ describe("database transport boundary", () => {
   it("requires Auth and the database to belong to the same Supabase project", () => {
     const pooler =
       "postgresql://postgres.example:synthetic@aws-0-us-east-2.pooler.supabase.com:6543/postgres";
-    assert.ok(databaseConfig(pooler, true, project).ssl);
+    assert.deepEqual(databaseConfig(pooler, true, project).ssl, {
+      rejectUnauthorized: true,
+      ca: supabaseDatabaseCa,
+    });
     assert.throws(() =>
       databaseConfig(pooler, true, "https://other.supabase.co"),
     );
